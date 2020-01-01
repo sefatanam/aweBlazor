@@ -1,0 +1,41 @@
+﻿@page "/razorgrid"
+@using AweBlazor.Data
+@inject StudentService StudentService
+
+<h3>Razor Data Grid - Practice</h3>
+@if (student == null)
+{
+    <p>Loading . . . </p>
+}
+else
+{
+    <RadzenGrid AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowPaging="true" PageSize="10"
+                AllowSorting="true" Data="@student" TItem="Student" ColumnWidth="200px">
+
+        <Columns>
+            <RadzenGridColumn TItem="Student" Property="Id" Title="Serial"></RadzenGridColumn>
+            <RadzenGridColumn TItem="Student" Property="Name" Title="Name"></RadzenGridColumn>
+            <RadzenGridColumn TItem="Student" Property="Department" Title="Department"></RadzenGridColumn>
+            <RadzenGridColumn TItem="Student" Property="PhoneNumber" Title="Contact No"></RadzenGridColumn>
+            <RadzenGridColumn TItem="Student" Property="Address" Title="Address"></RadzenGridColumn>
+            <RadzenGridColumn TItem="Student" Property="AdmissionDate" Title="Admission Date">
+                <Template Context="data">
+                    @String.Format("{0:d}", data.AdmissionDate);
+                </Template>
+            </RadzenGridColumn>
+        </Columns>
+    </RadzenGrid>
+
+}
+
+@code
+{
+    IEnumerable<Student>
+    student;
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        student = await Task.Run(() => StudentService.StudentList());
+    }
+}
