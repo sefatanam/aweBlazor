@@ -1,0 +1,35 @@
+﻿@page "/fileinput"
+@using AweBlazor.Service
+@inject IFileUpload IFileUpload
+
+<h3>FileUpload</h3>
+
+<InputFile OnChange="HandleFileChange"></InputFile>
+@if (file != null)
+{
+
+    long size = @file.Size;
+    double totalSize = size / 125;
+
+    <p>Name : @file.Name</p>
+    <p>Size : @totalSize KB</p>
+    <p>Type : @file.Type</p>
+    <p>Other :  @file.Data</p>
+
+}
+
+@code {
+
+    IFileListEntry file;
+    async Task HandleFileChange(IFileListEntry[] files)
+    {
+
+        file = files.FirstOrDefault();
+        if (file == null)
+        {
+            await IFileUpload.UploadAsync(file);
+
+        }
+    }
+
+}

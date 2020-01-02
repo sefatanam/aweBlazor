@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using AweBlazor.Data;
+using AweBlazor.Service;
 
 namespace AweBlazor
 {
@@ -28,7 +29,10 @@ namespace AweBlazor
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
+            //This for student Data Grid
             services.AddScoped<StudentService>();
+            //This for file upload
+            services.AddScoped<IFileUpload, FileUpload>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
