@@ -1,0 +1,80 @@
+﻿@page "/editStudent/{SelectedStudentId}"
+
+@using AweBlazor.Data
+@inject StudentService studentService
+@inject NavigationManager navigationManager
+
+<h3>Update Student</h3>
+
+<form>
+    <div class="row">
+        <div class="col-md-8">
+            @*<div class="form-group" hidden>
+                    <input form="Name" class="form-control" @bind="@obj.Id" />
+                </div>*@
+
+            <div class="form-group">
+                <label for="Name" class="custom-control-label">Name </label>
+                <input form="Name" class="form-control" @bind="@obj.Name" />
+            </div>
+            <div class="form-group">
+                <label for="Department" class="custom-control-label">Department </label>
+                <select @bind="@obj.Department" class="form-control">
+                    <option value="">---Select Department---</option>
+                    <option value="CSE">CSE</option>
+                    <option value="EEE">EEE</option>
+                    <option value="FDT"> FDT</option>
+                    <option value="THE">THE</option>
+                    <option value="JUV">JUV</option>
+                    <option value="WES"> WES</option>
+                </select>
+
+                @*<input form="Department" class="form-control" @bind="@obj.Department"></input>*@
+            </div>
+            <div class="form-group">
+                <label for=" PhoneNumber" class="custom-control-label">Contact No </label>
+                <input form="PhoneNumber" class="form-control" @bind="@obj.PhoneNumber" />
+            </div>
+            <div class="form-group">
+                <label for="Address" class="custom-control-label">Address </label>
+                <input form="Address" class="form-control" @bind="@obj.Address" />
+                <div class="form-group">
+                    <label for="AdmissionDate" class="custom-control-label">Admission Date </label>
+                    <input form="AdmissionDate" type="datetime-local" class="form-control" @bind="@obj.AdmissionDate" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <input type="button" class="btn btn-info" @onclick="UpdateStudent" value="Update" />
+                <input type="button" class="btn btn-warning" @onclick="Cancel" value="Cancel" />
+            </div>
+        </div>
+    </div>
+</form>
+
+@code {
+
+    [Parameter]
+    public string SelectedStudentId { get; set; }
+    Student obj = new Student();
+    protected override async Task OnInitializedAsync()
+    {
+        obj = await Task.Run(() => studentService.GetStudentById(Convert.ToInt32(SelectedStudentId)));
+    }
+
+    protected void UpdateStudent()
+    {
+        studentService.Update(obj);
+        navigationManager.NavigateTo("studentClub");
+    }
+
+    void Cancel()
+    {
+        navigationManager.NavigateTo("studentClub");
+
+    }
+
+}

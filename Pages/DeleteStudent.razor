@@ -1,0 +1,70 @@
+﻿@page "/deleteStudent/{SelectedStudentId}"
+
+@using AweBlazor.Data
+@inject StudentService studentService
+@inject NavigationManager navigationManager
+
+<h3>Delete Student</h3>
+<hr />
+<h3>Sure to Delete this Record? </h3>
+<div class="row">
+    <div class="col-md-8">
+        <div class="form-group" hidden>
+            <label aria-hidden="true">Id : </label>
+            <label>@obj.Id</label>
+        </div>
+        <div class="form-group">
+            <label>Name : </label>
+            <label>@obj.Name</label>
+        </div>
+        <div class="form-group">
+            <label>Contact No : </label>
+            <label>@obj.PhoneNumber</label>
+        </div>
+        <div class="form-group">
+            <label>Department : </label>
+            <label>@obj.Department</label>
+        </div>
+        <div class="form-group">
+            <label>Address : </label>
+            <label>@obj.Address</label>
+        </div>
+        <div class="form-group">
+            <label>Admission Date : </label>
+            <label>@obj.AdmissionDate</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <input type="button" class="btn btn-warning" @onclick="DelStudent" value="Delete" />
+            </div>
+            <div class="form-group">
+                <input type="button" class="btn btn-success" @onclick="Cancel" value="Cancel" />
+            </div>
+        </div>
+    </div>
+</div>
+@code {
+
+    [Parameter]
+    public string SelectedStudentId { get; set; }
+    Student obj = new Student();
+    protected override async Task OnInitializedAsync()
+    {
+        obj = await Task.Run(() => studentService.GetStudentById(Convert.ToInt32(SelectedStudentId)));
+    }
+
+    protected void DelStudent()
+    {
+        studentService.Delete(obj);
+        navigationManager.NavigateTo("studentClub");
+    }
+
+    void Cancel()
+    {
+        navigationManager.NavigateTo("studentClub");
+
+    }
+
+}
