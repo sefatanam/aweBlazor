@@ -1,5 +1,13 @@
 ﻿@page "/"
 
-<h1>Hello, world!</h1>
+<button @onclick="(() => ShowComponent = true)">Show</button>
+<button @onclick="(() => ShowComponent = false)">Hide</button>
+@if (ShowComponent)
+{
+    <FetchData></FetchData>
+}
 
-Welcome to your new app.
+
+@code {
+    bool ShowComponent { get; set; } = false;
+}
