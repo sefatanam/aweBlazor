@@ -32,6 +32,8 @@ namespace AweBlazor
             services.AddSingleton<WeatherForecastService>();
             //This for student Data Grid
             services.AddScoped<StudentService>();
+            //Question Servivce
+            services.AddScoped<QuestionService>();
             //This for file upload
             services.AddScoped<IFileUpload, FileUpload>();
             //Student Database

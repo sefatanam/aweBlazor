@@ -1,12 +1,12 @@
 ﻿@page "/"
 
+<MatButton>Test</MatButton>
 <button @onclick="(() => ShowComponent = true)">Show</button>
 <button @onclick="(() => ShowComponent = false)">Hide</button>
 @if (ShowComponent)
 {
     <FetchData></FetchData>
 }
-
 
 @code {
     bool ShowComponent { get; set; } = false;

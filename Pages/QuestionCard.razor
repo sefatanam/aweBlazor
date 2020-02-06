@@ -1,0 +1,84 @@
+﻿@page "/Question/{Id}"
+@using AweBlazor.Data
+@using AweBlazor.Service
+@inject QuestionService _service
+
+<style>
+    .demo-mat-card {
+        max-width: 500px;
+        border-radius: 20px;
+    }
+
+    .demo-mat-card-content {
+        padding: 1rem;
+    }
+
+    .demo-mat-card-clean-margin {
+        margin: 0px;
+    }
+</style>
+
+@if (Options != null)
+{
+    <MatCard class="demo-mat-card ">
+        <MatCardContent>
+            <div class="demo-mat-card-content">
+                <MatHeadline6 class="demo-mat-card-clean-margin">
+                    @Question.QuestionName
+                </MatHeadline6>
+                <MatSubtitle2 class="demo-mat-card-clean-margin">
+                    by Sefat Anam
+                </MatSubtitle2>
+            </div>
+
+            <MatBody2 class="demo-mat-card-content demo-mat-card-clean-margin">
+
+                @foreach (var item in Options)
+                {
+                    <div>
+                        <MatCheckbox @bind-Value="@CorrectAnswer.Ans" Label="@item.ToString()"> </MatCheckbox>
+                    </div>
+
+                }
+            </MatBody2>
+        </MatCardContent>
+    </MatCard>
+
+}
+else
+{
+    <p>Wait....</p>
+}
+
+@code{
+    [Parameter]
+    public string Id { get; set; }
+    Question Question = new Question();
+    CorrectAnswer CorrectAnswer = new CorrectAnswer();
+
+    List<string> Options;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Question = await Task.Run(() => _service.GetQuestionById(Convert.ToInt32(Id)));
+        Options = Question.QuestionOptions.Split(",").ToList();
+
+    }
+
+    //private bool _Checked = false;
+    //public bool Checked
+    //{
+
+    //    get
+    //    {
+    //        return _Checked;
+    //    }
+    //    set
+    //    {
+    //        _Checked = value;
+
+    //    }
+
+    //}
+
+}
