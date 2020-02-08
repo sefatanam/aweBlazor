@@ -14,5 +14,7 @@ namespace AweBlazor
         }
 
         public DbSet<Student> Students { get; set; }
+        public DbSet<Option> Options { get; set; }
+        public DbSet<Question> Questions { get; set; }
     }
 }
