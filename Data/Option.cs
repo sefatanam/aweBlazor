@@ -10,7 +10,6 @@ namespace AweBlazor.Data
         public int Id { get; set; }
         public string OptionName { get; set; }
         public bool IsCorrect { get; set; }
-
         public int QuestionId { get; set; }
         public virtual Question Question { get; set; }
     }

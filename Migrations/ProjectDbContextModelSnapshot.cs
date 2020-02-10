@@ -49,10 +49,13 @@ namespace AweBlazor.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("OptionId")
+                    b.Property<int>("OptionId")
                         .HasColumnType("int");
 
                     b.Property<string>("QuestionName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("QuestionType")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

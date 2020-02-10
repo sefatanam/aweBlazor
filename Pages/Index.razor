@@ -1,13 +1,29 @@
 ﻿@page "/"
 
-<MatButton>Test</MatButton>
-<button @onclick="(() => ShowComponent = true)">Show</button>
-<button @onclick="(() => ShowComponent = false)">Hide</button>
-@if (ShowComponent)
-{
-    <FetchData></FetchData>
-}
+<h1>Write to Console</h1>
+
+<p>Click the button to print to the JavaScript console using C#</p>
+
+<button class="btn btn-primary" @onclick="WriteToConsole">Click me</button>
 
 @code {
-    bool ShowComponent { get; set; } = false;
+
+    void WriteToConsole()
+    {
+        Console.WriteLine("Writing to javascript console using C#");
+    }
 }
+@*<MatButton>Test</MatButton>
+    <button @onclick="(() => ShowComponent = true)">Show</button>
+    <button @onclick="(() => ShowComponent = false)">Hide</button>
+
+    @if (ShowComponent)
+    {
+        <FetchData></FetchData>
+        Console.WriteLine("Shahin");
+    }
+
+    @code {
+        bool ShowComponent { get; set; } = false;
+
+    }*@

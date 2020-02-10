@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AweBlazor.Migrations
 {
     [DbContext(typeof(ProjectDbContext))]
-    [Migration("20200208132509_QuestionAndOptionModelAdded")]
-    partial class QuestionAndOptionModelAdded
+    [Migration("20200210101320_OptionQuestionModelUpdated")]
+    partial class OptionQuestionModelUpdated
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -51,10 +51,13 @@ namespace AweBlazor.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("OptionId")
+                    b.Property<int>("OptionId")
                         .HasColumnType("int");
 
                     b.Property<string>("QuestionName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("QuestionType")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

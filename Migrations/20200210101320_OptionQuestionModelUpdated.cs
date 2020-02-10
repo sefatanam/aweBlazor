@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AweBlazor.Migrations
 {
-    public partial class QuestionAndOptionModelAdded : Migration
+    public partial class OptionQuestionModelUpdated : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,11 +14,29 @@ namespace AweBlazor.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     QuestionName = table.Column<string>(nullable: true),
-                    OptionId = table.Column<int>(nullable: true)
+                    QuestionType = table.Column<string>(nullable: true),
+                    OptionId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Questions", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Students",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: false),
+                    Department = table.Column<string>(nullable: false),
+                    PhoneNumber = table.Column<string>(nullable: false),
+                    Address = table.Column<string>(nullable: false),
+                    AdmissionDate = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Students", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -51,6 +70,9 @@ namespace AweBlazor.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Options");
+
+            migrationBuilder.DropTable(
+                name: "Students");
 
             migrationBuilder.DropTable(
                 name: "Questions");

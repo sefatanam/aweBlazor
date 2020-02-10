@@ -9,7 +9,8 @@ namespace AweBlazor.Data
     {
         public int Id { get; set; }
         public string QuestionName { get; set; }
-        public int? OptionId { get; set; }
-        public virtual ICollection<Option> Options { get; set; }
+        public string QuestionType { get; set; }
+        public int OptionId { get; set; }
+        public List<Option> Options { get; set; }
     }
 }
