@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AweBlazor.Migrations
 {
     [DbContext(typeof(ProjectDbContext))]
-    [Migration("20200210101320_OptionQuestionModelUpdated")]
+    [Migration("20200210103018_OptionQuestionModelUpdated")]
     partial class OptionQuestionModelUpdated
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,18 +28,16 @@ namespace AweBlazor.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("IsCorrect")
-                        .HasColumnType("bit");
+                    b.Property<string>("IsCorrect")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("OptionName")
+                    b.Property<string>("OptionsName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("QuestionId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("QuestionId");
 
                     b.ToTable("Options");
                 });
@@ -94,15 +92,6 @@ namespace AweBlazor.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Students");
-                });
-
-            modelBuilder.Entity("AweBlazor.Data.Option", b =>
-                {
-                    b.HasOne("AweBlazor.Data.Question", "Question")
-                        .WithMany("Options")
-                        .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
