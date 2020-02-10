@@ -1,35 +1,35 @@
-﻿@*@page "/Question/{Id}"
-    @using AweBlazor.Data
-    @using AweBlazor.Service
-    @inject QuestionService _service
+﻿@page "/Question/{Id}"
+@using AweBlazor.Data
+@using AweBlazor.Service
 
-    @if (Options != null)
+@inject QuestionService _service
+@if (MultipleChoicesList != null)
+{
+    <div class="card col-md-6 offset-3">
+        <div class="card-header">
+            <h2> @Question.Title</h2>
+        </div>
+        <div class="card-body">
+            @foreach (var item in MultipleChoicesList)
+            {
+                <DxCheckBox ValueChecked="true" ValueUnchecked="false">@item.Name</DxCheckBox>
+            }
+        </div>
+    </div>
+}
+else
+{
+    <p>Generating Question . . . </p>
+}
+@code{
+    [Parameter]
+    public string Id { get; set; }
+    Question Question = new Question();
+    List<Option> MultipleChoicesList = new List<Option>();
+    protected override async Task OnInitializedAsync()
     {
-        <div class="card col-md-6 offset-3">
-            <div class="card-header">
-                <h2> @Question.QuestionName</h2>
-            </div>
-            <div class="card-body">
-
-                @foreach (var item in Options)
-                {
-                    <DxCheckBox ValueChecked="true" ValueUnchecked="false" @onclick="GetOptionName">
-                        @item
-                    </DxCheckBox>
-                }
-            </div>
-        </div>
-        <div>
-            <button type="button" class="btn btn-outline-success" @onclick="GetQuestionidAndoption">
-                NEXT
-            </button>
-        </div>
-
+        Question = await Task.Run(() => _service.GetQuestion(Convert.ToInt32(Id)));
+        MultipleChoicesList = Question.Options.ToList();
     }
 
-    @code{
-        [Parameter]
-        public string Id { get; set; }
-        Question Question = new Question();
-
-    }*@
+}

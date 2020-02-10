@@ -26,16 +26,18 @@ namespace AweBlazor.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("IsCorrect")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("IsCorrect")
+                        .HasColumnType("bit");
 
-                    b.Property<string>("OptionsName")
+                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("QuestionId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("QuestionId");
 
                     b.ToTable("Options");
                 });
@@ -47,13 +49,10 @@ namespace AweBlazor.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("OptionId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("QuestionName")
+                    b.Property<string>("Discription")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("QuestionType")
+                    b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -90,6 +89,15 @@ namespace AweBlazor.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Students");
+                });
+
+            modelBuilder.Entity("AweBlazor.Data.Option", b =>
+                {
+                    b.HasOne("AweBlazor.Data.Question", "Question")
+                        .WithMany()
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

@@ -8,12 +8,19 @@ namespace AweBlazor.Data
 {
     public class Question
     {
-        public int Id { get; set; }
-        public string QuestionName { get; set; }
-        public string QuestionType { get; set; }
-        public int OptionId { get; set; }
+        //Advance Slot
 
-        [NotMapped]
-        public virtual Option Options { get; set; }
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public string Discription { get; set; }
+        public virtual ICollection<Option> Options { get; set; }
+
+        // Basic Slot
+        //public int Id { get; set; }
+        //public string QuestionName { get; set; }
+        //public string QuestionType { get; set; }
+        //public int OptionId { get; set; }
+        //[NotMapped]
+        //public virtual Option Options { get; set; }
     }
 }

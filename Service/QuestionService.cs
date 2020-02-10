@@ -14,5 +14,13 @@ namespace AweBlazor.Service
         {
             _db = projectDbContext;
         }
+
+        public Question GetQuestion(int id)
+        {
+            var dataList = _db.Questions.Find(id);
+            var option = _db.Options.Where(c => c.QuestionId == id).ToList();
+            dataList.Options = option;
+            return dataList;
+        }
     }
 }
