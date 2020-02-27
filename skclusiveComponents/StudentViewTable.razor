@@ -1,0 +1,62 @@
+﻿@using AweBlazor.Data
+<Card Class="users-table-root">
+    <CardContent Class="users-table-content">
+        <div class="users-table-inner">
+            <Table>
+                <TableHead>
+                    <Skclusive.Material.Table.TableRow>
+                        <TableCell>Name</TableCell>
+                        <TableCell>Department</TableCell>
+                        <TableCell>Address</TableCell>
+                        <TableCell>Contact No</TableCell>
+                        <TableCell>Admission date</TableCell>
+                    </Skclusive.Material.Table.TableRow>
+                </TableHead>
+                <TableBody>
+                    @if (Users != null)
+                    {
+                        @foreach (var user in Users)
+                        {
+                            <Skclusive.Material.Table.TableRow @key="@user"
+                                                               Class="users-table-row"
+                                                               Hover
+                                                               Selected="false">
+
+                                <TableCell>
+                                    <div class="users-table-name-container">
+                                        
+                                        <Typography Variant="@TypographyVariant.Body1">
+                                            @user.Name
+                                        </Typography>
+                                    </div>
+                                </TableCell>
+                                <TableCell>@user.Department</TableCell>
+                                <TableCell>
+                                    @user.Address
+                                </TableCell>
+                                <TableCell>@user.PhoneNumber</TableCell>
+                                <TableCell>
+                                    @user.AdmissionDate.ToString("dd/mm/yyyy")
+                                </TableCell>
+                            </Skclusive.Material.Table.TableRow>
+                        }
+
+                    }
+                    else
+                    {
+                        <h2 align="center">Waiting . . . .</h2>
+                    }
+
+
+                </TableBody>
+            </Table>
+        </div>
+    </CardContent>
+</Card>
+
+@code
+{
+    [Parameter]
+    public IEnumerable<Student> Users { set; get; }
+
+}

@@ -7,32 +7,37 @@
 
 @if (MultipleChoicesList != null)
 {
-    <div class="card col-md-6 offset-3">
+    <div class="card col-md-6 offset-3"  style="background-color:purple;border-radius:10px">
         <div class="card-header">
-            <h2 align="inherit"> Adaptive Cards for Blazor is a community project that provides Adaptive Cards support for your Blazor applications. Adaptive Cards are a way to exchange content in a common and consistent way. Adaptive Cards can be integrated into different applications like Microsoft Teams and Outlook. Adaptive Cards can also be integrated into custom applications built with .NET, iOS and JavaScript. And now Blazor, the new Web App platform from Microsoft is supported.</h2>
+            <h2 align="inherit" style="color:aliceblue"> @Question.Title</h2>
         </div>
-        <div class="card-body">
-            @*<MatTable Items="MultipleChoicesList" Striped="true" Class="mat-elevation-z5">
-                <MatTableRow>
-                    <td> @String.Format(context.Name)</td>
+        <div class="card-body" >
 
-                </MatTableRow>
-            </MatTable>*@
-           
-            <table class="table table-hover table-active table-borderless" style="background-color:white">
+
+            <table class="table table-hover table-active table-borderless" style="background-color: white; border-radius: 10px">
                 <thead>
                     <tr>
-                        <th >Select</th>
+                        <th>Select</th>
                         <th class="col-md-2"> Multiple Choices</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var item in MultipleChoicesList)
                     {
-                        <tr>
-                            <td> <DxCheckBox ValueChecked="true" ValueUnchecked="false"></DxCheckBox></td>
-                            <td>@item.Name</td>
+                        <tr >
+                            <td style="color:purple"> <DxCheckBox Checked="@Checked"  @onclick="@(()=>CheckedChanged(item.Id))"></DxCheckBox></td>
+                            <td style="color:purple">@item.Name</td>
                         </tr>
+
+                        @*<tr>
+                                <td>
+                                     <Input type="checkbox" @bind-value="@item.Name"/>
+                                </td>
+                                <td>
+                                    @item.Name
+                                </td>
+                            </tr>*@
+
                     }
 
 
@@ -41,18 +46,18 @@
             </table>
 
 
-               
-            
+
+
         </div>
         <div class="row" align="center">
             <div class="col-md-2 offset-3">
-                <button class="btn btn-outline-info" type="button"> Previous</button>
+                <button class="btn btn-outline-light" type="button"> Previous</button>
             </div>
             <div class="col-md-2">
-                <button class="btn btn-outline-success" type="button"> Submit</button>
+                <button class="btn btn-outline-light" type="button" @onclick="@SubmitButton" > Submit</button>
             </div>
             <div class="col-md-2">
-                <button class="btn btn-outline-info" type="button"> Next</button>
+                <button class="btn btn-outline-light" type="button"> Next</button>
             </div>
 
         </div>
@@ -65,13 +70,32 @@ else
 @code{
     [Parameter]
     public string Id { get; set; }
-    public  bool ans { get; set; }
+    int OptionId;
+    int QuestionId;
+
     Question Question = new Question();
     List<Option> MultipleChoicesList = new List<Option>();
     protected override async Task OnInitializedAsync()
     {
         Question = await Task.Run(() => _service.GetQuestion(Convert.ToInt32(Id)));
         MultipleChoicesList = Question.Options.ToList();
+
+    }
+
+
+    public bool Checked { get; set; } = false;
+
+    void CheckedChanged(int value)
+    {
+        OptionId = value;
+
+    }
+
+    void SubmitButton()
+    {
+        QuestionId = Question.Id;
+        int opt = OptionId;
+
     }
 
 }

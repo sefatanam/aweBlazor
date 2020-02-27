@@ -1,0 +1,22 @@
+﻿@page "/stu"
+@using AweBlazor.Data
+
+@inject StudentService studentService
+
+<div class="users-root">
+
+    <div class="users-content">
+        <StudentViewTable Users="@studentObj" />
+    </div>
+</div>
+
+
+@code{
+    IEnumerable<Student>
+     studentObj;
+    protected override async Task OnInitializedAsync()
+    {
+        studentObj = await Task.Run(() => studentService.GetAllStudent());
+    }
+
+}

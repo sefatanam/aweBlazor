@@ -9,51 +9,113 @@
 </NavLink>
 
 <h2>Student Information</h2>
-@if (studentObj == null)
-{
-    <p>Loading . . . </p>
-}
-else
-{
-    <table class="table table-bordered table-hover">
-        <thead>
-            <tr>
-                <th>Serial</th>
-                <th>Name</th>
-                <th>Department</th>
-                <th>Contact No</th>
-                <th>Address</th>
-                <th>Admission Date</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in studentObj)
-            {
+
+
+<Card Class="users-table-root">
+    <CardContent Class="users-table-content">
+        <div class="users-table-inner">
+            <Table>
+                <TableHead>
+                    <Skclusive.Material.Table.TableRow>
+                        <TableCell>Name</TableCell>
+                        <TableCell>Department</TableCell>
+                        <TableCell>Address</TableCell>
+                        <TableCell>Contact No</TableCell>
+                        <TableCell>Admission date</TableCell>
+                    </Skclusive.Material.Table.TableRow>
+                </TableHead>
+                <TableBody>
+                    @if (studentObj != null)
+                    {
+                        @foreach (var user in studentObj)
+                        {
+                            <Skclusive.Material.Table.TableRow @key="@user"
+                                                               Class="users-table-row"
+                                                               Hover
+                                                               Selected="false">
+
+                                <TableCell>
+                                    <div class="users-table-name-container">
+                                        <Avatar Class="users-table-avatar"
+                                                Src="@user.Name">
+                                            @user.Name[0]
+                                        </Avatar>
+                                        <Typography Variant="@TypographyVariant.Body1">
+                                            @user.Name
+                                        </Typography>
+                                    </div>
+                                </TableCell>
+                                <TableCell>@user.Department</TableCell>
+                                <TableCell>
+                                    @user.Address
+                                </TableCell>
+                                <TableCell>@user.PhoneNumber</TableCell>
+                                <TableCell>
+                                    @user.AdmissionDate.ToString("dd/mm/yyyy")
+                                </TableCell>
+                            </Skclusive.Material.Table.TableRow>
+                        }
+
+                    }
+                    else
+                    {
+                        <h2 align="center">Waiting . . . .</h2>
+                    }
+
+
+                </TableBody>
+            </Table>
+        </div>
+    </CardContent>
+</Card>
+
+
+
+@*@if (studentObj == null)
+    {
+        <p>Loading . . . </p>
+    }
+    else
+    {
+        <table class="table table-bordered table-hover">
+            <thead>
                 <tr>
-                    <td>@item.Id</td>
-                    <td>@item.Name</td>
-                    <td>@item.Department</td>
-                    <td>@item.PhoneNumber</td>
-                    <td>@item.Address</td>
-                    <td>@item.AdmissionDate</td>
-                    <td>
-                        <a class="nav-link" href="EditStudent/@item.Id">
-                            <span class="oi oi-pencil" aria-hidden="true"></span>Edit
-                        </a>
-                        <a class="nav-link" href="DeleteStudent/@item.Id">
-                            <span class="oi oi-trash" aria-hidden="true"></span>Delete
-                        </a>
-                    </td>
+                    <th>Serial</th>
+                    <th>Name</th>
+                    <th>Department</th>
+                    <th>Contact No</th>
+                    <th>Address</th>
+                    <th>Admission Date</th>
+                    <th>Action</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-}
+            </thead>
+            <tbody>
+                @foreach (var item in studentObj)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.Name</td>
+                        <td>@item.Department</td>
+                        <td>@item.PhoneNumber</td>
+                        <td>@item.Address</td>
+                        <td>@item.AdmissionDate</td>
+                        <td>
+                            <a class="nav-link" href="EditStudent/@item.Id">
+                                <span class="oi oi-pencil" aria-hidden="true"></span>Edit
+                            </a>
+                            <a class="nav-link" href="DeleteStudent/@item.Id">
+                                <span class="oi oi-trash" aria-hidden="true"></span>Delete
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }*@
 
 @code {
 
-    List<Student>
+    IEnumerable<Student>
     studentObj;
     protected override async Task OnInitializedAsync()
     {

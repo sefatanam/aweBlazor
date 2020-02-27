@@ -1,18 +1,57 @@
 ﻿@page "/"
 
-<h1>Write to Console</h1>
 
-<p>Click the button to print to the JavaScript console using C#</p>
 
-<button class="btn btn-primary" @onclick="WriteToConsole">Click me</button>
+<DxCheckBox Checked="@Checked"  @onclick="@(()=>CheckedChanged(1))">Silent Mode</DxCheckBox>
+<DxCheckBox Checked="@Checked"  @onclick="@(()=>CheckedChanged(2))">Silent Mode</DxCheckBox>
+<DxCheckBox Checked="@Checked"  @onclick="@(()=>CheckedChanged(3))">Silent Mode</DxCheckBox>
+<DxCheckBox Checked="@Checked"  @onclick="@(()=>CheckedChanged(4))">Silent Mode</DxCheckBox>
 
-@code {
+@*<DxCheckBox Checked="@Checked1" CheckedChanged="@CheckedChanged1">Silent Mode</DxCheckBox>
+    <DxCheckBox CheckedChanged="@CheckedChanged2" Checked="@Checked2">Enable sound</DxCheckBox>
+    <DxCheckBox CheckedChanged="@CheckedChanged3" Checked="@Checked3">Enable vibration</DxCheckBox>*@
 
-    void WriteToConsole()
+@code{
+
+    bool Enabled { get; set; } = false;
+    bool Checked { get; set; } = false;
+    bool Checked1 { get; set; } = false;
+    bool Checked2 { get; set; } = false;
+    bool Checked3 { get; set; } = false;
+
+    void CheckedChanged(int value)
     {
-        Console.WriteLine("Writing to javascript console using C#");
+
+
+    }
+
+    void CheckedChanged1(bool value)
+    {
+        Checked1 = true;
+        Checked2 = false;
+        Checked2 = false;
+
+        StateHasChanged();
+    }
+    void CheckedChanged2(bool value)
+    {
+        Checked2 = true;
+        Checked1 = false;
+        Checked3 = false;
+
+        StateHasChanged();
+    }
+    void CheckedChanged3(bool value)
+    {
+        Checked1 = false;
+        Checked2 = false;
+        Checked3 = true;
+
+        StateHasChanged();
     }
 }
+
+
 @*<MatButton>Test</MatButton>
     <button @onclick="(() => ShowComponent = true)">Show</button>
     <button @onclick="(() => ShowComponent = false)">Hide</button>

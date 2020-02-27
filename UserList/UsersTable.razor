@@ -1,0 +1,53 @@
+﻿<Card Class="users-table-root">
+    <CardContent Class="users-table-content">
+        <div class="users-table-inner">
+            <Table>
+                <TableHead>
+                    <Skclusive.Material.Table.TableRow>
+                       
+                        <TableCell>Name</TableCell>
+                        <TableCell>Email</TableCell>
+                        <TableCell>Location</TableCell>
+                        <TableCell>Phone</TableCell>
+                        <TableCell>Registration date</TableCell>
+                    </Skclusive.Material.Table.TableRow>
+                </TableHead>
+                <TableBody>
+                @foreach(var user in Users)
+                {
+                    <Skclusive.Material.Table.TableRow
+                        @key="@user"
+                        Class="users-table-row"
+                        Hover
+                        Selected="false">
+                       
+                        <TableCell>
+                            <div class="users-table-name-container">
+                            
+                                <Typography
+                                    Variant="@TypographyVariant.Body1">
+                                    @user.Name
+                                </Typography>
+                            </div>
+                        </TableCell>
+                        <TableCell>@user.Email</TableCell>
+                        <TableCell>
+                            @user.Address.City, @user.Address.State, @user.Address.Country
+                        </TableCell>
+                        <TableCell>@user.Phone</TableCell>
+                        <TableCell>
+                            @user.CreatedAt.ToString("dd/mm/yyyy")
+                        </TableCell>
+                    </Skclusive.Material.Table.TableRow>
+                }
+                </TableBody>
+            </Table>
+        </div>
+    </CardContent>
+</Card>
+
+@code
+{
+    [Parameter]
+    public IEnumerable<User> Users { set; get; }
+}
