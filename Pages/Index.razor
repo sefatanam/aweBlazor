@@ -1,55 +1,146 @@
 ﻿@page "/"
+@inject AweBlazor.Service.TimeService Timer
 
+@inject NavigationManager NavManager
 
+<h1>Blazor Timer</h1>
 
-<DxCheckBox Checked="@Checked"  @onclick="@(()=>CheckedChanged(1))">Silent Mode</DxCheckBox>
-<DxCheckBox Checked="@Checked"  @onclick="@(()=>CheckedChanged(2))">Silent Mode</DxCheckBox>
-<DxCheckBox Checked="@Checked"  @onclick="@(()=>CheckedChanged(3))">Silent Mode</DxCheckBox>
-<DxCheckBox Checked="@Checked"  @onclick="@(()=>CheckedChanged(4))">Silent Mode</DxCheckBox>
+<button @onclick="StartTimer">Start Timer</button>
+<input type="time" value="@Timer"/>
 
-@*<DxCheckBox Checked="@Checked1" CheckedChanged="@CheckedChanged1">Silent Mode</DxCheckBox>
-    <DxCheckBox CheckedChanged="@CheckedChanged2" Checked="@Checked2">Enable sound</DxCheckBox>
-    <DxCheckBox CheckedChanged="@CheckedChanged3" Checked="@Checked3">Enable vibration</DxCheckBox>*@
-
-@code{
-
-    bool Enabled { get; set; } = false;
-    bool Checked { get; set; } = false;
-    bool Checked1 { get; set; } = false;
-    bool Checked2 { get; set; } = false;
-    bool Checked3 { get; set; } = false;
-
-    void CheckedChanged(int value)
+@code {
+    private void StartTimer()
     {
-
-
+        Timer.SetTimer(5000);
+        Timer.OnElapsed += TimerElapsedHandler;
+        Console.WriteLine("Timer Started.");
     }
 
-    void CheckedChanged1(bool value)
+    private void TimerElapsedHandler()
     {
-        Checked1 = true;
-        Checked2 = false;
-        Checked2 = false;
-
-        StateHasChanged();
-    }
-    void CheckedChanged2(bool value)
-    {
-        Checked2 = true;
-        Checked1 = false;
-        Checked3 = false;
-
-        StateHasChanged();
-    }
-    void CheckedChanged3(bool value)
-    {
-        Checked1 = false;
-        Checked2 = false;
-        Checked3 = true;
-
-        StateHasChanged();
+        Console.WriteLine("Timer Elapsed.");
+        NavManager.NavigateTo("createStudent");
     }
 }
+
+@*<h1>First Page</h1>
+    <input type="number" @bind="AppData.Age" />
+    <br>
+    <a href="/page2">Go to Page 2</a>*@
+
+
+@*<h1>Blazor Singleton Test</h1>
+    <InputComponent />
+    <Counter />
+    <a href="/page2">Go to Page 2</a>
+
+    @code {
+        protected override void OnInitialized()
+        {
+            AppData.OnChange += MyEventHandler;
+        }
+
+        private void MyEventHandler()
+        {
+            Console.WriteLine("AppData changed.");
+        }
+    }*@
+
+
+
+@*@using AweBlazor.Data
+    @using AweBlazor.Service
+
+    @using System.Timers
+
+
+
+
+        <div class="row">
+            @if (id!=0)
+            {
+                <QuestionCard Id="@id.ToString()"></QuestionCard>
+
+            }
+            else
+            {
+                <MatH1>Loading . . . . .</MatH1>
+            }
+        </div>
+
+
+
+    @code{
+
+        //System.Threading.Thread ShowQuestionDialog = new System.Threading.Thread(System.Threading.ThreadStart(StartShowing()));
+
+        private int id { get; set; } = 1;
+
+        void StartShowing()
+        {
+
+            Timer time = new Timer();
+
+
+        }
+    }*@
+
+
+
+
+
+
+
+
+@*
+    <DxCheckBox Checked="@Checked"  @onclick="@(()=>CheckedChanged(1))">Silent Mode</DxCheckBox>
+    <DxCheckBox Checked="@Checked"  @onclick="@(()=>CheckedChanged(2))">Silent Mode</DxCheckBox>
+    <DxCheckBox Checked="@Checked"  @onclick="@(()=>CheckedChanged(3))">Silent Mode</DxCheckBox>
+    <DxCheckBox Checked="@Checked"  @onclick="@(()=>CheckedChanged(4))">Silent Mode</DxCheckBox>
+
+    <DxCheckBox Checked="@Checked1" CheckedChanged="@CheckedChanged1">Silent Mode</DxCheckBox>
+        <DxCheckBox CheckedChanged="@CheckedChanged2" Checked="@Checked2">Enable sound</DxCheckBox>
+        <DxCheckBox CheckedChanged="@CheckedChanged3" Checked="@Checked3">Enable vibration</DxCheckBox>
+
+    @code{
+
+        bool Enabled { get; set; } = false;
+        bool Checked { get; set; } = false;
+        bool Checked1 { get; set; } = false;
+        bool Checked2 { get; set; } = false;
+        bool Checked3 { get; set; } = false;
+
+        void CheckedChanged(int value)
+        {
+
+
+        }
+
+        void CheckedChanged1(bool value)
+        {
+            Checked1 = true;
+            Checked2 = false;
+            Checked2 = false;
+
+            StateHasChanged();
+        }
+        void CheckedChanged2(bool value)
+        {
+            Checked2 = true;
+            Checked1 = false;
+            Checked3 = false;
+
+            StateHasChanged();
+        }
+        void CheckedChanged3(bool value)
+        {
+            Checked1 = false;
+            Checked2 = false;
+            Checked3 = true;
+
+            StateHasChanged();
+        }
+    }*@
 
 
 @*<MatButton>Test</MatButton>

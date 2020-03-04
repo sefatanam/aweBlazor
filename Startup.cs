@@ -39,6 +39,9 @@ namespace AweBlazor
             //Student Database
             services.AddDbContext<ProjectDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            //AppData
+            services.AddScoped<AppData>();
+            services.AddScoped<TimeService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

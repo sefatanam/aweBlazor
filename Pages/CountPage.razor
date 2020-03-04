@@ -1,0 +1,78 @@
+﻿@page "/CountDown"
+@using System.Timers
+
+<h3>Count Down  </h3>
+
+<div>
+    <h2> Time left : @*Here I want to show Time*@ </h2>
+</div>
+
+<div class="row">
+    @if (id != 0)
+    {
+         @*This is Question Component & Here I pass the Question id *@
+        <QuestionCard Id="@id.ToString()"></QuestionCard>
+    }
+    else
+    {
+        <MatH1>Loading . . . . .</MatH1>
+    }
+</div>
+
+
+@code {
+
+
+    System.Timers.Timer aTimer = new System.Timers.Timer();
+    private int id { get; set; } = 0;
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Run(() => Start());
+
+    }
+    void Start()
+    {
+        //aTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
+        id = 2;  //I Just pass manually Question id
+        aTimer.Interval = 5000;
+        aTimer.Enabled = true;
+        aTimer.Start();
+    }
+
+    //private void OnTimedEvent(object source, ElapsedEventArgs e)
+    //{
+    //    id = 2;
+    //}
+
+    //private static System.Timers.Timer aTimer;
+    //Timer time = new Timer();
+
+    //void Start()
+    //{
+    //    SetTimer();
+
+
+    //    aTimer.Stop();
+
+
+
+    //}
+    //private void SetTimer()
+    //{
+    //    // Create a timer with a two second interval.
+    //    aTimer = new System.Timers.Timer(2000);
+    //    // Hook up the Elapsed event for the timer.
+    //    aTimer.Elapsed += OnTimedEvent;
+    //    aTimer.AutoReset = true;
+    //    aTimer.Enabled = true;
+    //}
+    //private void OnTimedEvent(Object source, ElapsedEventArgs e)
+    //{
+    //    Console.WriteLine("The Elapsed event was raised at {0:HH:mm:ss.fff}",
+    //                      e.SignalTime);
+    //}
+
+
+
+
+}
