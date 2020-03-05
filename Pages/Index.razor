@@ -1,96 +1,102 @@
 ﻿@page "/"
-@inject AweBlazor.Service.TimeService Timer
 
-@inject NavigationManager NavManager
+@*<div class="row ">
+        <div class="col-md-3">
+            <button class="btn btn-outline-primary" @onclick="@(async () => { StopWatch(); })">Start</button>
+        </div>
+        <div class="col-md-3">
+            <button class="btn btn-outline-primary" @onclick="@(() => { isRunningStopWatch = false; })"> Pause</button>
 
-<h1>Blazor Timer</h1>
+        </div>
+        <div class="col-md-6">
+            <p4 style="color:ghostwhite">@stopwatch  </p4>
 
-<button @onclick="StartTimer">Start Timer</button>
-<input type="time" value="@Timer"/>
-
-@code {
-    private void StartTimer()
-    {
-        Timer.SetTimer(5000);
-        Timer.OnElapsed += TimerElapsedHandler;
-        Console.WriteLine("Timer Started.");
-    }
-
-    private void TimerElapsedHandler()
-    {
-        Console.WriteLine("Timer Elapsed.");
-        NavManager.NavigateTo("createStudent");
-    }
-}
-
-@*<h1>First Page</h1>
-    <input type="number" @bind="AppData.Age" />
-    <br>
-    <a href="/page2">Go to Page 2</a>*@
-
-
-@*<h1>Blazor Singleton Test</h1>
-    <InputComponent />
-    <Counter />
-    <a href="/page2">Go to Page 2</a>
-
-    @code {
-        protected override void OnInitialized()
-        {
-            AppData.OnChange += MyEventHandler;
-        }
-
-        private void MyEventHandler()
-        {
-            Console.WriteLine("AppData changed.");
-        }
-    }*@
-
-
-
-@*@using AweBlazor.Data
-    @using AweBlazor.Service
-
-    @using System.Timers
-
-
-
-
-        <div class="row">
-            @if (id!=0)
-            {
-                <QuestionCard Id="@id.ToString()"></QuestionCard>
-
-            }
-            else
-            {
-                <MatH1>Loading . . . . .</MatH1>
-            }
         </div>
 
+    </div>*@
+<div>
+    <button @onclick="@Start"> Start</button>
+</div>
+<h4 style="color:aliceblue">@TimeLeft</h4>
 
 
-    @code{
+@if (show)
+{
+<div class="row">
 
-        //System.Threading.Thread ShowQuestionDialog = new System.Threading.Thread(System.Threading.ThreadStart(StartShowing()));
+    <QuestionCard Id="@id.ToString()"></QuestionCard>
 
-        private int id { get; set; } = 1;
+</div>
+}
 
-        void StartShowing()
+
+
+<p>@displayText</p>
+
+
+
+@code{
+    TimeSpan TimeLeft = new TimeSpan(0, 0, 15);
+    string displayText = "";
+    int id = 1;
+    bool show=false;
+
+    void Start()
+    {
+        Task.Delay(1000);
+        displayText = "Start Time";
+        show = true;
+      
+
+    }
+
+    async Task Timer()
+    {
+        while (TimeLeft > new TimeSpan())
         {
-
-            Timer time = new Timer();
-
-
+            await Task.Delay(1000);
+            TimeLeft = TimeLeft.Subtract(new TimeSpan(0, 0, 1));
+            StateHasChanged();
         }
-    }*@
 
 
+        await AfterTime();
+        StateHasChanged();
+    }
+
+    Task AfterTime()
+    {
+        displayText = "Time Expire";
+        TimeLeft =  new TimeSpan(0, 0, 15);
+       
+
+        return Task.CompletedTask;
+    }
+
+    //TimeSpan stopwatch = new TimeSpan();
+    //bool isRunningStopWatch = false;
+
+    //async Task StopWatch()
+    //{
+
+    //    isRunningStopWatch = true;
+    //    while (isRunningStopWatch)
+    //    {
+    //        await Task.Delay(1000);
+    //        stopwatch = stopwatch.Add(new TimeSpan(0, 1, 0));
+    //        StateHasChanged();
+    //    }
+
+    //    stopwatch = new TimeSpan();
+    //    isRunningStopWatch = false;
+
+    //}
 
 
+}
 
 
-
+@* CHECK AND UNCHECK CHECKBOX SINGLE CHECKBOX WILL BE SELECTED ! IDEA IS HERE *@
 
 @*
     <DxCheckBox Checked="@Checked"  @onclick="@(()=>CheckedChanged(1))">Silent Mode</DxCheckBox>
@@ -142,6 +148,8 @@
         }
     }*@
 
+
+@* USE ANOTHER RAZOR COMPONENT BY BUTTON CLICK *@
 
 @*<MatButton>Test</MatButton>
     <button @onclick="(() => ShowComponent = true)">Show</button>

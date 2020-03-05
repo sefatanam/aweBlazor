@@ -22,5 +22,11 @@ namespace AweBlazor.Service
             dataList.Options = option;
             return dataList;
         }
+
+
+        public List<Question> GetAllQuestionList()
+        {
+            return _db.Questions.ToList();
+        }
     }
 }

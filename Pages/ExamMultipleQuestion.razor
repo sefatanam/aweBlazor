@@ -1,0 +1,54 @@
+﻿@page  "/ExamPaper"
+@using AweBlazor.Data
+@using AweBlazor.Service
+@inject QuestionService _service
+
+<div>
+    <button @onclick="@Start"> Start</button>
+</div>
+<h4 style="color:aliceblue">@TimeLeft</h4>
+
+@if (show) { 
+}
+
+
+
+
+@code{
+ TimeSpan TimeLeft = new TimeSpan(0, 0, 15);
+    string displayText = "";
+    int id = 1;
+    bool show=false;
+
+    void Start()
+    {
+        displayText = "Start Time";
+        show = true;
+        Timer();
+
+    }
+
+    async Task Timer()
+    {
+        while (TimeLeft > new TimeSpan())
+        {
+            await Task.Delay(1000);
+            TimeLeft = TimeLeft.Subtract(new TimeSpan(0, 0, 1));
+            StateHasChanged();
+        }
+
+
+        await AfterTime();
+        StateHasChanged();
+    }
+
+    Task AfterTime()
+    {
+        displayText = "Time Expire";
+        TimeLeft =  new TimeSpan(0, 0, 15);
+        id = 2;
+
+        return Task.CompletedTask;
+    }
+
+}
