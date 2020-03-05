@@ -23,6 +23,18 @@ namespace AweBlazor.Service
             return dataList;
         }
 
+        public List<Question> GetAllQuestionWithMultipleChoices()
+        {
+            var questionList = _db.Questions.ToList();
+            var optionList = _db.Options.ToList();
+            foreach (var item in questionList)
+            {
+                var option = optionList.Where(c => c.QuestionId == item.Id).ToList();
+                item.Options = option;
+            }
+            return questionList;
+        }
+
 
         public List<Question> GetAllQuestionList()
         {

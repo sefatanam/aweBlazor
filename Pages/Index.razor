@@ -14,39 +14,42 @@
         </div>
 
     </div>*@
-<div>
+
+
+<div align="center">
     <button @onclick="@Start"> Start</button>
 </div>
-<h4 style="color:aliceblue">@TimeLeft</h4>
+<h1 align="center" style="color:aliceblue">@TimeLeft</h1>
 
 
 @if (show)
 {
-<div class="row">
 
+ @*<div class="row">
     <QuestionCard Id="@id.ToString()"></QuestionCard>
+  </div>*@
 
-</div>
 }
 
 
 
-<p>@displayText</p>
+<h4 align="center" style="color:aliceblue" >@displayText</h4>
 
 
 
 @code{
+     int id = 1;
     TimeSpan TimeLeft = new TimeSpan(0, 0, 15);
     string displayText = "";
-    int id = 1;
+   
     bool show=false;
 
     void Start()
     {
         Task.Delay(1000);
-        displayText = "Start Time";
+        displayText = " Time Start";
         show = true;
-      
+        Timer();
 
     }
 
@@ -68,8 +71,6 @@
     {
         displayText = "Time Expire";
         TimeLeft =  new TimeSpan(0, 0, 15);
-       
-
         return Task.CompletedTask;
     }
 

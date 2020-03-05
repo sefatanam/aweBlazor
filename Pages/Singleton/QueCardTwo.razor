@@ -1,19 +1,12 @@
-﻿@page "/Question/{Id}"
+﻿
 @using AweBlazor.Data
-@using AweBlazor.Service
-
-@inject QuestionService _service
-
-
-@if (MultipleChoicesList != null)
+@if (Question.Options != null)
 {
-    <div class="card col-md-6 offset-3"  style="background-color:purple;border-radius:10px;border-color:aliceblue">
+    <div class="card col-md-6 offset-3" style="background-color:purple;border-radius:10px;border-color:aliceblue">
         <div class="card-header">
             <h2 align="inherit" style="color:aliceblue"> @Question.Title</h2>
         </div>
-        <div class="card-body" >
-
-
+        <div class="card-body">
             <table class="table table-hover table-active table-borderless" style="background-color: white; border-radius: 10px">
                 <thead>
                     <tr>
@@ -22,37 +15,26 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in MultipleChoicesList)
+                    @foreach (var item in Question.Options)
                     {
-                        <tr >
-                            <td style="color:purple"> <DxCheckBox Checked="@Checked"  @onclick="@(()=>CheckedChanged(item.Id))"></DxCheckBox></td>
+                        <tr>
+                            <td style="color:purple"> <DxCheckBox Checked="@Checked" @onclick="@(()=>CheckedChanged(item.Id))"></DxCheckBox></td>
                             <td style="color:purple">@item.Name</td>
                         </tr>
-
-                      
-
                     }
-
-
                 </tbody>
-
             </table>
-
-
-
-
         </div>
         <div class="row" align="center">
             <div class="col-md-2 offset-3">
                 <button class="btn btn-outline-light" type="button"> Previous</button>
             </div>
             <div class="col-md-2">
-                <button class="btn btn-outline-light" type="button" @onclick="@SubmitButton" > Submit</button>
+                <button class="btn btn-outline-light" type="button" @onclick="@SubmitButton"> Submit</button>
             </div>
             <div class="col-md-2">
                 <button class="btn btn-outline-light" type="button"> Next</button>
             </div>
-
         </div>
     </div>
 }
@@ -61,37 +43,23 @@ else
     <p>Generating Question . . . </p>
 }
 @code{
-    [Parameter]
-    public string Id { get; set; }
-   
 
+    [Parameter]
+    public Question Question { get; set; }
 
     int OptionId;
     int QuestionId;
-
-    Question Question = new Question();
-    List<Option> MultipleChoicesList = new List<Option>();
-    protected override async Task OnInitializedAsync()
-    {
-        Question = await Task.Run(() => _service.GetQuestion(Convert.ToInt32(Id)));
-        MultipleChoicesList = Question.Options.ToList();
-
-    }
-
 
     public bool Checked { get; set; } = false;
 
     void CheckedChanged(int value)
     {
         OptionId = value;
-
     }
-
     void SubmitButton()
     {
         QuestionId = Question.Id;
         int opt = OptionId;
-
     }
 
 }

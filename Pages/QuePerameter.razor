@@ -1,0 +1,65 @@
+﻿@page "/qp"
+@using AweBlazor.Data
+@using AweBlazor.Service
+@inject QuestionService _service
+<div>
+    <button @onclick="@Start"> Start</button>
+</div>
+<h4 style="color:aliceblue">@TimeLeft</h4>
+@if (show)
+{
+    <div class="row">
+        <AweBlazor.Pages.Singleton.QueCardTwo Question="@QuestionObject"></AweBlazor.Pages.Singleton.QueCardTwo>
+    </div>
+}
+else
+{
+    <div>
+        <h2 style="color:aliceblue">Just wait some seconds . . .</h2>
+    </div>
+}
+@code{
+    private Question QuestionObject { get; set; }
+    public List<Question> Questions;
+    protected override async Task OnInitializedAsync()
+    {
+        Questions = await Task.Run(() => _service.GetAllQuestionWithMultipleChoices());
+    }
+    TimeSpan TimeLeft = new TimeSpan(0, 0, 15);
+    string displayText = "";
+    bool show = false;
+    void Start()
+    {
+        show = true;
+        QuestionObject =Questions.Find(c=>c.Id==2);
+        Timer();
+
+
+        //foreach (var item in Questions)
+        //{
+        //    QuestionObject = item;
+        //    Timer();
+        //    displayText = "Start Time";
+        //    show = true;
+        //}
+
+
+    }
+    async Task Timer()
+    {
+        while (TimeLeft > new TimeSpan())
+        {
+            //await Task.Delay(1000);
+            TimeLeft = TimeLeft.Subtract(new TimeSpan(0, 0, 1));
+            StateHasChanged();
+        }
+        await AfterTime();
+        StateHasChanged();
+    }
+    Task AfterTime()
+    {
+        displayText = "Time Expire";
+        TimeLeft = new TimeSpan(0, 0, 15);
+        return Task.CompletedTask;
+    }
+}
