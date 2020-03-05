@@ -2,10 +2,12 @@
 @using AweBlazor.Data
 @using AweBlazor.Service
 @inject QuestionService _service
+
+<br />
 <div>
     <button @onclick="@Start"> Start</button>
 </div>
-<h4 style="color:aliceblue">@TimeLeft</h4>
+<h1 style="color:aliceblue">@TimeLeft</h1>
 @if (show)
 {
     <div class="row">
@@ -19,20 +21,30 @@ else
     </div>
 }
 @code{
+
+    int count = 0;
+
     private Question QuestionObject { get; set; }
     public List<Question> Questions;
     protected override async Task OnInitializedAsync()
     {
         Questions = await Task.Run(() => _service.GetAllQuestionWithMultipleChoices());
+
     }
     TimeSpan TimeLeft = new TimeSpan(0, 0, 15);
     string displayText = "";
     bool show = false;
-    void Start()
+
+    async Task Start()
     {
         show = true;
-        QuestionObject =Questions.Find(c=>c.Id==2);
-        Timer();
+        if (Questions?.Count >= count)
+        {
+            QuestionObject = Questions.ToArray()[count];
+        }
+
+
+        await Timer();
 
 
         //foreach (var item in Questions)
@@ -45,21 +57,26 @@ else
 
 
     }
+
     async Task Timer()
     {
         while (TimeLeft > new TimeSpan())
         {
-            //await Task.Delay(1000);
+            await Task.Delay(1000);
             TimeLeft = TimeLeft.Subtract(new TimeSpan(0, 0, 1));
+
             StateHasChanged();
         }
         await AfterTime();
         StateHasChanged();
     }
-    Task AfterTime()
+    async Task AfterTime()
     {
+        QuestionObject = null;
         displayText = "Time Expire";
         TimeLeft = new TimeSpan(0, 0, 15);
-        return Task.CompletedTask;
+        count++;
+        await Start();
+        //Task.CompletedTask;
     }
 }

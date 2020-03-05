@@ -1,10 +1,13 @@
 ﻿
 @using AweBlazor.Data
-@if (Question.Options != null)
+
+
+@if (Question!=null && Question.Options!=null && Question.Options.Count>1)
 {
     <div class="card col-md-6 offset-3" style="background-color:purple;border-radius:10px;border-color:aliceblue">
         <div class="card-header">
             <h2 align="inherit" style="color:aliceblue"> @Question.Title</h2>
+            <p algn="inherit" style="color:aliceblue">@Question.Discription</p>
         </div>
         <div class="card-body">
             <table class="table table-hover table-active table-borderless" style="background-color: white; border-radius: 10px">
@@ -26,9 +29,10 @@
             </table>
         </div>
         <div class="row" align="center">
-            <div class="col-md-2 offset-3">
+            @* For testing purpose Go to Previous is Disabled *@
+            @*<div class="col-md-2 offset-3">
                 <button class="btn btn-outline-light" type="button"> Previous</button>
-            </div>
+            </div>*@
             <div class="col-md-2">
                 <button class="btn btn-outline-light" type="button" @onclick="@SubmitButton"> Submit</button>
             </div>
@@ -44,18 +48,26 @@ else
 }
 @code{
 
+    //Component Perameter 
     [Parameter]
     public Question Question { get; set; }
 
+    //This OptionId and QuestionId will be moved to a new class, its tempo...
+
     int OptionId;
     int QuestionId;
+    
 
     public bool Checked { get; set; } = false;
 
+    //On change event => Get Selected checkbox value and Uncheck other if checked
     void CheckedChanged(int value)
     {
         OptionId = value;
+
     }
+
+    //On submit => Get submited Question Id and this.OptionId 
     void SubmitButton()
     {
         QuestionId = Question.Id;
