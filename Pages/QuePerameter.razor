@@ -8,52 +8,60 @@
     <button @onclick="@Start"> Start</button>
 </div>
 <h1 style="color:aliceblue">@TimeLeft</h1>
-@if (show)
+
+@if (show && QuestionObject!=null)
 {
-    <div class="row">
-        <AweBlazor.Pages.Singleton.QueCardTwo Question="@QuestionObject"></AweBlazor.Pages.Singleton.QueCardTwo>
-    </div>
+        <div class="row">
+            <AweBlazor.Pages.Singleton.QueCardTwo Question="@QuestionObject"></AweBlazor.Pages.Singleton.QueCardTwo>
+        </div>   
 }
 else
 {
+
     <div>
-        <h2 style="color:aliceblue">Just wait some seconds . . .</h2>
+        <h2 style="color:aliceblue" align="center">@ExamStatus</h2>
     </div>
 }
+
 @code{
 
     int count = 0;
 
+    private string ExamStatus { get; set; } = "Start Exam";
+    //I pass 1 Question to Question Component as a Perameter
     private Question QuestionObject { get; set; }
+    //Get All Questions
     public List<Question> Questions;
+
     protected override async Task OnInitializedAsync()
     {
         Questions = await Task.Run(() => _service.GetAllQuestionWithMultipleChoices());
 
     }
-    TimeSpan TimeLeft = new TimeSpan(0, 0, 15);
+
+    TimeSpan TimeLeft = new TimeSpan(0, 0, 05);
+
     string displayText = "";
     bool show = false;
 
     async Task Start()
     {
         show = true;
+
         if (Questions?.Count >= count)
         {
             QuestionObject = Questions.ToArray()[count];
         }
+        else
+        {
+            show = false;
+            ExamStatus = "Exam End !";
+            TimeLeft = new TimeSpan(0, 0, 05);
+
+        }
 
 
         await Timer();
-
-
-        //foreach (var item in Questions)
-        //{
-        //    QuestionObject = item;
-        //    Timer();
-        //    displayText = "Start Time";
-        //    show = true;
-        //}
 
 
     }
@@ -74,8 +82,17 @@ else
     {
         QuestionObject = null;
         displayText = "Time Expire";
-        TimeLeft = new TimeSpan(0, 0, 15);
+        TimeLeft = new TimeSpan(0, 0, 05);
         count++;
+
+        if (count==Questions.Count)
+        {
+            ExamStatus = "Exam End !";
+            TimeLeft = new TimeSpan(0, 0, 05);
+            show = false;
+            return;
+
+        }
         await Start();
         //Task.CompletedTask;
     }
