@@ -21,7 +21,7 @@
                     @foreach (var item in Question.Options)
                     {
                         <tr>
-                            <td style="color:purple"> <DxCheckBox Checked="@Checked" @onclick="@(()=>CheckedChanged(item.Id))"></DxCheckBox></td>
+                            <td style="color:purple"> <DxCheckBox  @onclick="@(() => IsCheckBoxClicked(item.Id))" Checked="@(EditionCode==item.Id)"></DxCheckBox></td>
                             <td style="color:purple">@item.Name</td>
                         </tr>
                     }
@@ -49,21 +49,27 @@ else
 @code{
 
     //Component Perameter 
+    int EditionCode = 0;
+
     [Parameter]
     public Question Question { get; set; }
+
+
 
     //This OptionId and QuestionId will be moved to a new class, its tempo...
 
     int OptionId;
     int QuestionId;
-    
-
     public bool Checked { get; set; } = false;
 
+
     //On change event => Get Selected checkbox value and Uncheck other if checked
-    void CheckedChanged(int value)
+
+
+    void IsCheckBoxClicked(int value)
     {
-        OptionId = value;
+
+        EditionCode = value;
 
     }
 
@@ -72,6 +78,7 @@ else
     {
         QuestionId = Question.Id;
         int opt = OptionId;
+
     }
 
 }

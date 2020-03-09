@@ -25,7 +25,7 @@
                     @foreach (var item in MultipleChoicesList)
                     {
                         <tr >
-                            <td style="color:purple"> <DxCheckBox Checked="@Checked"  @onclick="@(()=>CheckedChanged(item.Id))"></DxCheckBox></td>
+                            <td style="color:purple"> <DxCheckBox Checked="@Checked" Id="@item.Id.ToString()"  @onclick="@(()=>CheckedChanged(item.Id))"></DxCheckBox></td>
                             <td style="color:purple">@item.Name</td>
                         </tr>
 
@@ -63,7 +63,7 @@ else
 @code{
     [Parameter]
     public string Id { get; set; }
-   
+
 
 
     int OptionId;
@@ -80,11 +80,11 @@ else
 
 
     public bool Checked { get; set; } = false;
-
+    int counter = 0;
     void CheckedChanged(int value)
     {
         OptionId = value;
-
+        counter++;
     }
 
     void SubmitButton()
