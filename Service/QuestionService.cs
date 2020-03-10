@@ -40,5 +40,11 @@ namespace AweBlazor.Service
         {
             return _db.Questions.ToList();
         }
+
+        public UserSubmitAnswer GetSubmitedAnswer(UserSubmitAnswer obj)
+        {
+            return obj;
+        }
+
     }
 }

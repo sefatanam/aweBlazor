@@ -1,5 +1,8 @@
 ﻿
 @using AweBlazor.Data
+@using AweBlazor.Service
+
+@inject QuestionService _service
 
 
 @if (Question!=null && Question.Options!=null && Question.Options.Count>1)
@@ -21,7 +24,7 @@
                     @foreach (var item in Question.Options)
                     {
                         <tr>
-                            <td style="color:purple"> <DxCheckBox  @onclick="@(() => IsCheckBoxClicked(item.Id))" Checked="@(EditionCode==item.Id)"></DxCheckBox></td>
+                            <td style="color:purple"> <DxCheckBox  @onclick="@(() => IsCheckBoxClicked(item.Id,item.IsCorrect))" Checked="@(UserSubmitAnswer.OptionId == item.Id)"></DxCheckBox></td>
                             <td style="color:purple">@item.Name</td>
                         </tr>
                     }
@@ -29,10 +32,7 @@
             </table>
         </div>
         <div class="row" align="center">
-            @* For testing purpose Go to Previous is Disabled *@
-            @*<div class="col-md-2 offset-3">
-                <button class="btn btn-outline-light" type="button"> Previous</button>
-            </div>*@
+          
             <div class="col-md-2">
                 <button class="btn btn-outline-light" type="button" @onclick="@SubmitButton"> Submit</button>
             </div>
@@ -44,40 +44,26 @@
 }
 else
 {
-    <p>Generating Question . . . </p>
+    <h2 style="color:aliceblue">Generating Question . . . </h2>
 }
 @code{
 
     //Component Perameter 
-    int EditionCode = 0;
-
     [Parameter]
     public Question Question { get; set; }
-
-
-
-    //This OptionId and QuestionId will be moved to a new class, its tempo...
-
-    int OptionId;
-    int QuestionId;
-    public bool Checked { get; set; } = false;
-
-
+    public UserSubmitAnswer UserSubmitAnswer = new UserSubmitAnswer();
     //On change event => Get Selected checkbox value and Uncheck other if checked
-
-
-    void IsCheckBoxClicked(int value)
+    void IsCheckBoxClicked(int value,bool ans)
     {
-
-        EditionCode = value;
-
+        UserSubmitAnswer.IsCorrect = ans;
+        UserSubmitAnswer.OptionId = value;
+        UserSubmitAnswer.QuestionId = this.Question.Id;
     }
-
     //On submit => Get submited Question Id and this.OptionId 
     void SubmitButton()
     {
-        QuestionId = Question.Id;
-        int opt = OptionId;
+        var c = UserSubmitAnswer;
+        //_service.GetSubmitedAnswer();
 
     }
 
