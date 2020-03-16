@@ -11,6 +11,8 @@ using Microsoft.Extensions.Hosting;
 using AweBlazor.Data;
 using AweBlazor.Service;
 using Microsoft.EntityFrameworkCore;
+using System.Data.SqlClient;
+using System.Net.Http;
 
 namespace AweBlazor
 {
@@ -42,6 +44,7 @@ namespace AweBlazor
             //AppData
             services.AddScoped<AppData>();
             services.AddScoped<TimeService>();
+            services.AddScoped<HttpClient>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

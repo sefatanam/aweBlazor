@@ -1,0 +1,57 @@
+﻿@page  "/aweapi"
+@using AweBlazor.API
+@inject HttpClient _httpClient
+
+
+
+    <div class="row" >
+        <div class="col-md-10">
+            <h2 style="color:aliceblue"> Today's Weather Forcasts</h2>
+        </div>
+        <div class="col-md-2">
+            <button @onclick="@GetForcastData" class="btn btn-outline-secondary">  Weather Data</button>
+        </div>
+        <hr />
+    </div>
+
+
+<div class="row">
+    <table class="table table-bordered table-active table-hover table-striped" style="color:black;background-color:aliceblue">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Temp C</th>
+                <th>Temp F</th>
+                <th>Summary</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in WeatherForecasts)
+            {
+                <tr>
+                    <td>@item.Date</td>
+                    <td>@item.TemperatureC</td>
+                    <td>@item.TemperatureF</td>
+                    <td>@item.Summary</td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+
+
+</div>
+
+
+
+
+@code{
+
+    List<WeatherForecast> WeatherForecasts = new List<WeatherForecast>();
+
+    private async Task GetForcastData()
+    {
+        WeatherForecasts = await _httpClient.GetJsonAsync<List<WeatherForecast>>("https://localhost:44378/weatherforecast");
+    }
+
+}

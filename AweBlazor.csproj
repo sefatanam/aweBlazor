@@ -2,15 +2,20 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="AweBlazor.API\**" />
     <Compile Remove="obj\**" />
     <Compile Remove="wwwroot\lib\**" />
+    <Content Remove="AweBlazor.API\**" />
     <Content Remove="obj\**" />
     <Content Remove="wwwroot\lib\**" />
+    <EmbeddedResource Remove="AweBlazor.API\**" />
     <EmbeddedResource Remove="obj\**" />
     <EmbeddedResource Remove="wwwroot\lib\**" />
+    <None Remove="AweBlazor.API\**" />
     <None Remove="obj\**" />
     <None Remove="wwwroot\lib\**" />
   </ItemGroup>
@@ -34,6 +39,10 @@
 
   <ItemGroup>
     <Folder Include="Upload\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="AweBlazor.API\AweBlazor.API.csproj" />
   </ItemGroup>
 
 </Project>
