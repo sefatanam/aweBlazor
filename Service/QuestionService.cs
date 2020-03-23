@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AweBlazor.Pages;
 
 namespace AweBlazor.Service
 {
@@ -41,10 +42,20 @@ namespace AweBlazor.Service
             return _db.Questions.ToList();
         }
 
-        public UserSubmitAnswer GetSubmitedAnswer(UserSubmitAnswer obj)
+        
+        private List<UserSubmitAnswer> UserSubmitAnswers = new List<UserSubmitAnswer>();
+
+  
+
+        public void GetSubmitedAnswer(UserSubmitAnswer obj)
         {
-            return obj;
+            UserSubmitAnswers.Add(obj);
+            
         }
+
+
+        
+
 
     }
 }

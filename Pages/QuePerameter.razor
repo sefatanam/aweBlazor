@@ -25,7 +25,9 @@ else
 
 @code{
 
-    int count = 0;
+    //public static HelperModel helper = new HelperModel() { Count =0 };
+
+    public int count = 0;
 
     private string ExamStatus { get; set; } = "Start Exam";
     //I pass 1 Question to Question Component as a Perameter
@@ -36,6 +38,7 @@ else
     protected override async Task OnInitializedAsync()
     {
         Questions = await Task.Run(() => _service.GetAllQuestionWithMultipleChoices());
+
 
     }
 
@@ -50,6 +53,7 @@ else
 
         if (Questions?.Count >= count)
         {
+
             QuestionObject = Questions.ToArray()[count];
         }
         else
@@ -81,6 +85,7 @@ else
         displayText = "Time Expire";
         TimeLeft = new TimeSpan(0, 0, 10);
         count++;
+        
 
         if (count==Questions.Count)
         {
@@ -93,4 +98,6 @@ else
         await Start();
         //Task.CompletedTask;
     }
+
+
 }

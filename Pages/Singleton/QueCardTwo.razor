@@ -60,10 +60,11 @@ else
         UserSubmitAnswer.QuestionId = this.Question.Id;
     }
     //On submit => Get submited Question Id and this.OptionId 
+
     void SubmitButton()
     {
         var c = UserSubmitAnswer;
-        //_service.GetSubmitedAnswer();
+        _service.GetSubmitedAnswer(c);
 
     }
 

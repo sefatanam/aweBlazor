@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29509.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AweBlazor", "AweBlazor.csproj", "{66949FA7-0311-45B3-9796-A240EE4A5880}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AweBlazor.API", "AweBlazor.API\AweBlazor.API.csproj", "{5372C6FF-8480-4E68-AD49-15EF960ACBB6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AweBlazor.API", "AweBlazor.API\AweBlazor.API.csproj", "{5372C6FF-8480-4E68-AD49-15EF960ACBB6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
